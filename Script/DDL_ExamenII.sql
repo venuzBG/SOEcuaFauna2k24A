@@ -60,6 +60,6 @@ CREATE TABLE Hormiga(
   ,GenoAlimento                 INTEGER REFERENCES Alimento(IdAlimento)
   
   ,Estado                       VARCHAR(1) NOT NULL DEFAULT('A')
-  ,FechaNacimiento              DATETIME NOT NULL
+  ,FechaCreacion                DATETIME NOT NULL
   ,FechaModifica                DATETIME
 );
