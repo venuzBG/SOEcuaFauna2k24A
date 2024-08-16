@@ -1,21 +1,19 @@
 -- database: ../DataBase/DB_ExamenII.sqlite
 
-INSERT INTO CatalogoTipo
+INSERT INTO SOCatalogoTipo
  (Nombre            ) VALUES
  ('TipoHormiga'     )
 ,('Sexo'            )
 ,('LocalidadTipo'   )
 ,('Alimento'        );
 
-INSERT INTO Catalogo
+INSERT INTO SOCatalogo
 (IdCatalogoTipo  ,Nombre            ) VALUES
 (1               ,'Reina'           )
 ,(1              ,'Larva'           )
-,(1              ,'Rastrera'        )
+,(1              ,'Rastreadora'     )
 ,(1              ,'Soldado'         )
-,(1              ,'Obrera'          )
-,(1              ,'Macho'           )
-,(1              ,'Aladas'          )
+,(1              ,'Zangano'         )
 ,(2              ,'Macho'           )
 ,(2              ,'Hembra'          )
 ,(2              ,'Asexual'         )
@@ -25,52 +23,57 @@ INSERT INTO Catalogo
 ,(4              ,'IngestaNativa'   )
 ,(4              ,'GenoAlimento'    );
 
-INSERT INTO Localidad
+INSERT INTO SOLocalidad
 (IdLocalidadPadre  ,IdCTLocalidad           ,Nombre    ) VALUES
-(NULL              ,11                      ,'Ecuador' )
-,(1                ,12                      ,'Costa'   )
-,(1                ,12                      ,'Sierra'  )
-,(1                ,12                      ,'Oriente' );
+(NULL              ,9                      ,'Ecuador' )
+,(1                ,10                      ,'Costa'   )
+,(1                ,10                      ,'Sierra'  )
+,(1                ,10                      ,'Oriente' );
 
-INSERT INTO Localidad
+INSERT INTO SOLocalidad
 (IdLocalidadPadre  ,IdCTLocalidad           ,Nombre                          ) VALUES
- (1                ,12                      ,'Insular'                       ) 
+ (1                ,10                      ,'Insular'                       ) 
  
-,(2                ,13                      ,'Esmeraldas'                    )
-,(2                ,13                      ,'Santo Domingo de los Tsáchilas')
-,(2                ,13                      ,'Manabí'                        )
-,(2                ,13                      ,'Los Ríos'                      )
-,(2                ,13                      ,'Guayas'                        )
-,(2                ,13                      ,'Santa Elena'                   )
-,(2                ,13                      ,'El Oro'                        )
+,(2                ,11                      ,'Esmeraldas'                    )
+,(2                ,11                      ,'Santo Domingo de los Tsáchilas')
+,(2                ,11                      ,'Manabí'                        )
+,(2                ,11                      ,'Los Ríos'                      )
+,(2                ,11                      ,'Guayas'                        )
+,(2                ,11                      ,'Santa Elena'                   )
+,(2                ,11                      ,'El Oro'                        )
 
-,(3                ,13                      ,'Carchi'                        )
-,(3                ,13                      ,'Imbabura'                      )
-,(3                ,13                      ,'Pichincha'                     )
-,(3                ,13                      ,'Cotopaxi'                      )
-,(3                ,13                      ,'Tungurahua'                    )
-,(3                ,13                      ,'Bolívar'                       )
-,(3                ,13                      ,'Chimborazo'                    )
-,(3                ,13                      ,'Cañar'                         )
-,(3                ,13                      ,'Azuay'                         )
-,(3                ,13                      ,'Loja'                          )
+,(3                ,11                      ,'Carchi'                        )
+,(3                ,11                      ,'Imbabura'                      )
+,(3                ,11                      ,'Pichincha'                     )
+,(3                ,11                      ,'Cotopaxi'                      )
+,(3                ,11                      ,'Tungurahua'                    )
+,(3                ,11                      ,'Bolívar'                       )
+,(3                ,11                      ,'Chimborazo'                    )
+,(3                ,11                      ,'Cañar'                         )
+,(3                ,11                      ,'Azuay'                         )
+,(3                ,11                      ,'Loja'                          )
 
-,(4                ,13                      ,'Sucumbíos'                     )
-,(4                ,13                      ,'Napo'                          )
-,(4                ,13                      ,'Orellana'                      )
-,(4                ,13                      ,'Pastaza'                       )
-,(4                ,13                      ,'Morona Santiago'               )
-,(4                ,13                      ,'Zamora Chinchipe'              )
+,(4                ,11                      ,'Sucumbíos'                     )
+,(4                ,11                      ,'Napo'                          )
+,(4                ,11                      ,'Orellana'                      )
+,(4                ,11                      ,'Pastaza'                       )
+,(4                ,11                      ,'Morona Santiago'               )
+,(4                ,11                      ,'Zamora Chinchipe'              )
 
 
-,(5                ,13                      ,'Galápagos'                     );
+,(5                ,11                      ,'Galápagos'                     );
 
-INSERT INTO Alimento
+INSERT INTO SOAlimento
 (IdCTAlimento             ,Nombre    ) VALUES
-(14                       ,'Carnívoro'   ) 
-,(14                      ,'Herbívoro'   ) 
-,(14                      ,'Omnívoro'    ) 
-,(14                      ,'Insectívoros') 
-,(15                      ,'X'           ) 
-,(15                      ,'XX'          ) 
-,(15                      ,'XY'          );
+(12                       ,'Carnívoro'   ) 
+,(12                      ,'Herbívoro'   ) 
+,(12                      ,'Omnívoro'    ) 
+,(12                      ,'Insectívoros') 
+,(13                      ,'X'           ) 
+,(13                      ,'XX'          ) 
+,(13                      ,'XY'          );
+
+INSERT INTO Hormiga 
+(TipoHormiga, Localidad, Sexo,IngestaNativa, GenoAlimento) VALUES
+(1,19,9,3,7)
+,(5,19,9,3,7);

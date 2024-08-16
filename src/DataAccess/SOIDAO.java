@@ -1,7 +1,7 @@
 package DataAccess;
 import java.util.List;
 
-public interface IDAO<T> {
+public interface SOIDAO<T> {
     public T readBy(Integer id)         throws Exception;
     public boolean create(T entity)     throws Exception;
     public List<T> readAll()            throws Exception;

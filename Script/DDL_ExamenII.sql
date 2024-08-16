@@ -5,13 +5,13 @@ Fecha : 15.julio.2k24
 Script: Insertando MER
 */
 
-DROP TABLE IF EXISTS CatalogoTipo;
-DROP TABLE IF EXISTS Catalogo;
-DROP TABLE IF EXISTS Localidad;
-DROP TABLE IF EXISTS Alimento;
-DROP TABLE IF EXISTS Hormiga;
+DROP TABLE IF EXISTS SOCatalogoTipo;
+DROP TABLE IF EXISTS SOCatalogo;
+DROP TABLE IF EXISTS SOLocalidad;
+DROP TABLE IF EXISTS SOAlimento;
+DROP TABLE IF EXISTS SOHormiga;
 
-CREATE TABLE catalogoTipo (
+CREATE TABLE SOCatalogoTipo (
    IdCatalogoTipo   INTEGER NOT NULL PRIMARY KEY autoincrement 
   ,Nombre           VARCHAR(30) NOT NULL UNIQUE
 
@@ -20,9 +20,9 @@ CREATE TABLE catalogoTipo (
   ,FechaModifica    DATETIME
 );
 
-CREATE TABLE Catalogo(
+CREATE TABLE SOCatalogo(
   IdCatalogo         INTEGER NOT NULL PRIMARY KEY autoincrement 
-  ,IdCatalogoTipo    INTEGER NOT NULL REFERENCES CatalogoTipo(IdCatalogoTipo)
+  ,IdCatalogoTipo    INTEGER NOT NULL REFERENCES SOCatalogoTipo(IdCatalogoTipo)
   ,Nombre            VARCHAR(18) NOT NULL 
 
   ,Estado           VARCHAR(1) NOT NULL DEFAULT('A')
@@ -30,10 +30,10 @@ CREATE TABLE Catalogo(
   ,FechaModifica    DATETIME
 );
 
-CREATE TABLE Localidad(
+CREATE TABLE SOLocalidad(
     IdLocalidad             INTEGER NOT NULL PRIMARY KEY autoincrement
-    ,IdLocalidadPadre       INTEGER REFERENCES Localidad(IdLocalidad)
-    ,IdCTLocalidad          INTEGER REFERENCES Catalogo(IdCatalogo)
+    ,IdLocalidadPadre       INTEGER REFERENCES SOLocalidad(IdLocalidad)
+    ,IdCTLocalidad          INTEGER REFERENCES SOCatalogo(IdCatalogo)
     ,Nombre                 VARCHAR(18) NOT NULL 
 
     ,Estado                 VARCHAR(1) NOT NULL DEFAULT('A')
@@ -41,9 +41,9 @@ CREATE TABLE Localidad(
     ,FechaModifica          DATETIME
 );
 
-CREATE TABLE Alimento(
+CREATE TABLE SOAlimento(
   IdAlimento                  INTEGER NOT NULL PRIMARY KEY autoincrement
-  ,IdCTAlimento               INTEGER REFERENCES Catalogo(IdCatalogo)
+  ,IdCTAlimento               INTEGER REFERENCES SOCatalogo(IdCatalogo)
   ,Nombre                     VARCHAR(18) NOT NULL 
 
   ,Estado                     VARCHAR(1) NOT NULL DEFAULT('A')
@@ -51,15 +51,27 @@ CREATE TABLE Alimento(
   ,FechaModifica              DATETIME
 );
 
-CREATE TABLE Hormiga(
+CREATE TABLE SOHormiga(
   IdHormiga                     INTEGER NOT NULL PRIMARY KEY autoincrement
-  ,TipoHormiga                  INTEGER REFERENCES Catalogo(IdCatalogo)
-  ,Localidad                    INTEGER REFERENCES Localidad(IdLocalidad)
-  ,Sexo                         INTEGER REFERENCES Catalogo(IdCatalogo)
-  ,IngestaNativa                INTEGER REFERENCES Alimento(IdAlimento)
-  ,GenoAlimento                 INTEGER REFERENCES Alimento(IdAlimento)
+  ,TipoHormiga                  INTEGER REFERENCES SOCatalogo(IdCatalogo)
+  ,Localidad                    INTEGER REFERENCES SOLocalidad(IdLocalidad)
+  ,Sexo                         INTEGER REFERENCES SOCatalogo(IdCatalogo)
+  ,IngestaNativa                INTEGER REFERENCES SOAlimento(IdAlimento)
+  ,GenoAlimento                 INTEGER REFERENCES SOAlimento(IdAlimento)
   
   ,Estado                       VARCHAR(1) NOT NULL DEFAULT('A')
-  ,FechaCreacion                DATETIME NOT NULL
+  ,FechaCreacion                DATETIME DEFAULT(datetime('now','localtime'))
   ,FechaModifica                DATETIME
 );
+
+SELECT IdHormiga
+, TipoHormiga
+, Localidad
+, Sexo
+, IngestaNativa
+, GenoAlimento
+, Estado
+,FechaCreacion 
+,FechaModifica
+FROM Hormiga 
+Where Estado = 'A'

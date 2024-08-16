@@ -1,7 +1,17 @@
 package UserInterface.Form;
 
-import javax.swing.*;
+import UserInterface.CustomerControl.SOButton;
+import UserInterface.CustomerControl.SOJComboBox;
+import UserInterface.CustomerControl.SOJLabel;
+import UserInterface.CustomerControl.SOJTextField;
+
 import java.awt.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
+import javax.swing.border.LineBorder;
 
 public class HormigueroVirtual {
 
@@ -9,7 +19,8 @@ public class HormigueroVirtual {
         // Crear el frame principal
         JFrame frame = new JFrame("EcuaFauna 2k24A");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);
+        frame.setSize(800, 400);
+        frame.setResizable(false);
         
         // Crear un panel para contener todos los componentes
         JPanel panel = new JPanel();
@@ -19,66 +30,90 @@ public class HormigueroVirtual {
         gbc.insets = new Insets(5, 5, 5, 5);
         
         // Cedula Label
-        JLabel cedulaLabel = new JLabel("Cédula:");
+        SOJLabel cedulaLabel = new SOJLabel("Cédula:");
         gbc.gridx = 0;
         gbc.gridy = 0;
         panel.add(cedulaLabel, gbc);
         
         // Cedula TextField
-        JTextField cedulaField = new JTextField(20);
+        SOJTextField cedulaField = new SOJTextField(20);
         gbc.gridx = 1;
         gbc.gridy = 0;
         panel.add(cedulaField, gbc);
         
         // Nombre Label
-        JLabel nombreLabel = new JLabel("Nombre:");
+        SOJLabel nombreLabel = new SOJLabel("Nombre:");
         gbc.gridx = 0;
         gbc.gridy = 1;
         panel.add(nombreLabel, gbc);
         
         // Nombre TextField
-        JTextField nombreField = new JTextField(20);
+        SOJTextField nombreField = new SOJTextField(20);
         gbc.gridx = 1;
         gbc.gridy = 1;
         panel.add(nombreField, gbc);
         
         // Icono y Hormiguero Virtual Label
-        JLabel iconoLabel = new JLabel(new ImageIcon("/UserInterface/Resource/Icono/hormiga.png")); // Cambia la ruta al icono correspondiente
+        JLabel iconoLabel = new JLabel(new ImageIcon("/UserInterface/Resource/Icon/hormiga.png")); // Cambia la ruta al icono correspondiente
         gbc.gridx = 0;
         gbc.gridy = 2;
         panel.add(iconoLabel, gbc);
         
-        JLabel hormigueroLabel = new JLabel("Hormiguero Virtual");
+        SOJLabel hormigueroLabel = new SOJLabel("Hormiguero Virtual");
         gbc.gridx = 1;
         gbc.gridy = 2;
         panel.add(hormigueroLabel, gbc);
         
         // Botón Crear hormiga Larva
-        JButton crearLarvaButton = new JButton("Crear hormiga Larva");
+        SOButton crearLarvaButton = new SOButton("Crear hormiga Larva");
         gbc.gridx = 2;
         gbc.gridy = 2;
         panel.add(crearLarvaButton, gbc);
         
-        // Tabla de 6 columnas y 3 filas
-        String[] columnNames = {"Col1", "Col2", "Col3", "Col4", "Col5", "Col6"};
-        Object[][] data = {
-            {"", "", "", "", "", ""},
-            {"", "", "", "", "", ""},
-            {"", "", "", "", "", ""}
-        };
-        JTable table = new JTable(data, columnNames);
-        JScrollPane tableScrollPane = new JScrollPane(table);
+        // Tabla de 6 columnas y 3 filas sin títulos de columna visibles
+        DefaultTableModel model = new DefaultTableModel(3, 6); // 3 filas, 6 columnas
+        JTable table = new JTable(model);
+
+        // Ocultar los encabezados de las columnas
+        JTableHeader header = table.getTableHeader();
+        header.setVisible(false);
+
+        // Ajustar los tamaños de las columnas y los espacios entre ellas
+        TableColumnModel columnModel = table.getColumnModel();
+        for (int i = 0; i < columnModel.getColumnCount(); i++) {
+            columnModel.getColumn(i).setPreferredWidth(50); // Ancho preferido de cada columna
+        }
+
+        // Ajustar espacios entre filas y columnas
+        table.setRowHeight(30); // Ajustar altura de fila
+        table.setIntercellSpacing(new Dimension(10, 5)); // Espacio entre columnas (10) y filas (5)
+
+        // Establecer color de fondo de las celdas en blanco
+        table.setBackground(Color.WHITE);
+
+        // Personalizar los bordes de las celdas
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                cell.setBackground(Color.WHITE);
+                ((JComponent) cell).setBorder(new LineBorder(Color.BLUE, 2)); // Cambiar color y grosor del borde
+                return cell;
+            }
+        });
+
+        // Reducir espacio debajo de la tabla
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 3;
-        gbc.fill = GridBagConstraints.BOTH; // Ajusta el tamaño para eliminar el espacio vacío
+        gbc.fill = GridBagConstraints.BOTH; 
         gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        panel.add(tableScrollPane, gbc);
+        gbc.weighty = 0.2; // Reducir el peso en Y para minimizar el espacio
+        panel.add(new JScrollPane(table), gbc);
         
         // ComboBox GenoAlimento
         String[] genoAlimentoOptions = {"<GenoAlimento>", "X", "XX", "XY"};
-        JComboBox<String> genoAlimentoComboBox = new JComboBox<>(genoAlimentoOptions);
+        SOJComboBox<String> genoAlimentoComboBox = new SOJComboBox<>(genoAlimentoOptions);
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth = 1;
@@ -88,20 +123,20 @@ public class HormigueroVirtual {
         panel.add(genoAlimentoComboBox, gbc);
         
         // Botón alimentar con Genoalimento
-        JButton alimentarButton = new JButton("alimentar con Genoalimento");
+        SOButton alimentarButton = new SOButton("alimentar con Genoalimento");
         gbc.gridx = 1;
         gbc.gridy = 4;
         panel.add(alimentarButton, gbc);
         
         // ComboBox IngestaNativa
         String[] ingestaNativaOptions = {"<IngestaNativa>", "Carnívoro", "Herbívoro", "Omnívoro", "Insectívoros"};
-        JComboBox<String> ingestaNativaComboBox = new JComboBox<>(ingestaNativaOptions);
+        SOJComboBox<String> ingestaNativaComboBox = new SOJComboBox<>(ingestaNativaOptions);
         gbc.gridx = 0;
         gbc.gridy = 5;
         panel.add(ingestaNativaComboBox, gbc);
         
         // Botón alimentar con Ingesta Nativa
-        JButton alimentarIngestaButton = new JButton("alimentar con Ingesta Nativa");
+        SOButton alimentarIngestaButton = new SOButton("alimentar con Ingesta Nativa");
         gbc.gridx = 1;
         gbc.gridy = 5;
         panel.add(alimentarIngestaButton, gbc);
@@ -109,8 +144,8 @@ public class HormigueroVirtual {
         // Botones Borrar y Guardar
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        JButton borrarButton = new JButton("Borrar");
-        JButton guardarButton = new JButton("Guardar");
+        SOButton borrarButton = new SOButton("Borrar");
+        SOButton guardarButton = new SOButton("Guardar");
         buttonsPanel.add(borrarButton);
         buttonsPanel.add(guardarButton);
         
