@@ -59,7 +59,7 @@ CREATE TABLE SOHormiga(
   ,IngestaNativa                INTEGER REFERENCES SOAlimento(IdAlimento)
   ,GenoAlimento                 INTEGER REFERENCES SOAlimento(IdAlimento)
   
-  ,Estado                       VARCHAR(1) NOT NULL DEFAULT('A')
+  ,Estado                       VARCHAR(18) NOT NULL 
   ,FechaCreacion                DATETIME DEFAULT(datetime('now','localtime'))
   ,FechaModifica                DATETIME
 );

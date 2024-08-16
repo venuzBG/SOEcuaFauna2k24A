@@ -4,16 +4,19 @@ import UserInterface.CustomerControl.SOButton;
 import UserInterface.CustomerControl.SOJComboBox;
 import UserInterface.CustomerControl.SOJLabel;
 import UserInterface.CustomerControl.SOJTextField;
-
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
-import javax.swing.border.LineBorder;
 
 public class HormigueroVirtual {
+
+    private int regNroCounter = 1; // Contador para RegNro
+    private DefaultTableModel model; // Modelo de la tabla
 
     public HormigueroVirtual() {
         // Crear el frame principal
@@ -70,18 +73,15 @@ public class HormigueroVirtual {
         gbc.gridy = 2;
         panel.add(crearLarvaButton, gbc);
         
-        // Tabla de 6 columnas y 3 filas sin títulos de columna visibles
-        DefaultTableModel model = new DefaultTableModel(3, 6); // 3 filas, 6 columnas
+        // Tabla de 7 columnas con títulos personalizados
+        String[] columnNames = {"RegNro", "TipoHormiga", "Ubicacion", "Sexo", "GenoAlimento", "IngestaNativa", "Estado"};
+        model = new DefaultTableModel(null, columnNames);
         JTable table = new JTable(model);
-
-        // Ocultar los encabezados de las columnas
-        JTableHeader header = table.getTableHeader();
-        header.setVisible(false);
 
         // Ajustar los tamaños de las columnas y los espacios entre ellas
         TableColumnModel columnModel = table.getColumnModel();
         for (int i = 0; i < columnModel.getColumnCount(); i++) {
-            columnModel.getColumn(i).setPreferredWidth(50); // Ancho preferido de cada columna
+            columnModel.getColumn(i).setPreferredWidth(100); // Ancho preferido de cada columna
         }
 
         // Ajustar espacios entre filas y columnas
@@ -153,6 +153,31 @@ public class HormigueroVirtual {
         gbc.gridy = 6;
         gbc.gridwidth = 3;
         panel.add(buttonsPanel, gbc);
+
+        // Agregar acción al botón "Crear hormiga Larva"
+        crearLarvaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int result = JOptionPane.showConfirmDialog(frame, 
+                        "¿Está seguro de crear una hormiga?", 
+                        "Confirmar", 
+                        JOptionPane.YES_NO_OPTION, 
+                        JOptionPane.QUESTION_MESSAGE);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    // Agregar una nueva fila con valores predeterminados
+                    model.addRow(new Object[]{
+                            regNroCounter++, // RegNro secuencial
+                            "Larva",          // Tipo Hormiga
+                            "",               // Ubicacion (vacío por defecto)
+                            "Asexual",        // Sexo
+                            "",               // GenoAlimento (vacío por defecto)
+                            "",               // IngestaNativa (vacío por defecto)
+                            "Vivo"            // Estado
+                    });
+                }
+            }
+        });
         
         // Agregar el panel al frame y hacerlo visible
         frame.add(panel);

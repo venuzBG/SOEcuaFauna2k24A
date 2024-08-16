@@ -1,11 +1,3 @@
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import com.formdev.flatlaf.FlatDarkLaf;
-// import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneDarkIJTheme;
-
 import UserInterface.Form.HormigueroVirtual;
 
 public class App {
@@ -43,7 +35,11 @@ public class App {
         // } catch (UnsupportedLookAndFeelException e) {
         //     e.printStackTrace();
         // }
-        
+
+                // Crear instancias de los alimentos
+
+        // Crear instancias de los alimentos
+
         new HormigueroVirtual();
     }
 }
